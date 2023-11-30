@@ -2,12 +2,26 @@ from PIL import Image
 import pytesseract
 import gradio as gr
 import os
+from flair.data import Sentence
+from flair.models import SequenceTagger
+from segtok.segmenter import split_single
+
+tagger = SequenceTagger.load("ner-ontonotes")
 
 langs = []
 
 choices = os.popen("tesseract --list-langs").read().split("\n")[1:-1]
 
 blocks = gr.Blocks()
+
+
+def get_named_entities(ocr_text: str):
+    sentence = [Sentence(sent, use_tokenizer=True) for sent in split_single(ocr_text)]
+    tagger.predict(sentence)
+
+    entities = [entity for entity in sent.get_spans("ner") for sent in sentence]
+
+    return entities
 
 
 # If you don't have tesseract executable in your PATH, include the following:
