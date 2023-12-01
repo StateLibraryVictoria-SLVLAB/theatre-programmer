@@ -23,7 +23,7 @@ def get_named_entities(ocr_text: str):
 
     for token in sentence:
         for entity in token.get_spans("ner"):
-            print("ENT ", type(entity))
+            print("ENT ", str(entity))
             entities.append(entity)
 
     print("ENTITIES ", entities)
@@ -70,6 +70,8 @@ with gr.Blocks() as demo:
             text_out = gr.TextArea(label="OCR output")
         with gr.Column():
             ner = gr.TextArea(label="Named entities")
+        with gr.Column():
+            gr.CheckboxGroup(ner, label="Named entities")
 
     btn.click(fn=run, inputs=[image_in, lang], outputs=[text_out, ner])
 
