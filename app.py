@@ -45,10 +45,10 @@ def get_named_entities(ocr_text: str):
 
 
 def run(image, lang=None):
-    result = pytesseract.image_to_string(image, lang=None if lang == [] else lang)
+    result = pytesseract.image_to_string(image, lang="Eng" if lang == [] else lang)
 
     ner = get_named_entities(result)
-    return [result, ner]
+    return result, ner
 
 
 with gr.Blocks() as demo:
