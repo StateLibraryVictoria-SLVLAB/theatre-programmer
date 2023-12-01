@@ -19,14 +19,13 @@ def get_named_entities(ocr_text: str):
     sentence = [Sentence(sent, use_tokenizer=True) for sent in split_single(ocr_text)]
     tagger.predict(sentence)
 
-    # entities = [entity for entity in sent.get_spans("ner") for sent in sentence]
     entities = []
 
-    for sent in sentence:
-        for entity in sent.get_spans("ner"):
+    for token in sentence:
+        for entity in token.get_spans("ner"):
             entities.append(entity)
+            print(token.get_tag("pos").value)
 
-    print("Entities ", entities)
     return entities
 
 
@@ -51,7 +50,6 @@ def get_named_entities(ocr_text: str):
 
 
 def run(image, lang="eng"):
-    print("Lang ", lang)
     result = pytesseract.image_to_string(image, lang=None if lang == [] else lang)
 
     ner = get_named_entities(result)
@@ -63,7 +61,7 @@ with gr.Blocks() as demo:
     with gr.Row():
         with gr.Column():
             image_in = gr.Image(type="pil")
-            lang = gr.Dropdown(choices)
+            lang = gr.Dropdown(choices, value="eng")
             btn = gr.Button("Run")
         with gr.Column():
             text_out = gr.TextArea()
