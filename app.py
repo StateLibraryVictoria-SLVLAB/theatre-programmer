@@ -70,8 +70,8 @@ with gr.Blocks() as demo:
             text_out = gr.TextArea(label="OCR output")
         with gr.Column():
             ner = gr.TextArea(label="Named entities")
-        with gr.Column():
-            gr.CheckboxGroup(ner, label="Named entities")
+        # with gr.Column():
+        #     gr.CheckboxGroup(ner, label="Named entities")
 
     btn.click(fn=run, inputs=[image_in, lang], outputs=[text_out, ner])
 
