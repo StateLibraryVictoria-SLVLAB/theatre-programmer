@@ -19,7 +19,13 @@ def get_named_entities(ocr_text: str):
     sentence = [Sentence(sent, use_tokenizer=True) for sent in split_single(ocr_text)]
     tagger.predict(sentence)
 
-    entities = [entity for entity in sent.get_spans("ner") for sent in sentence]
+    # entities = [entity for entity in sent.get_spans("ner") for sent in sentence]
+    entities = []
+
+    for sent in sentence:
+        for entity in sent.get_spans("ner"):
+            entities.append(entity)
+
     print("Entities ", entities)
     return entities
 
@@ -44,7 +50,7 @@ def get_named_entities(ocr_text: str):
 # print(pytesseract.image_to_osd(Image.open('test.png'))
 
 
-def run(image, lang=None):
+def run(image, lang="eng"):
     print("Lang ", lang)
     result = pytesseract.image_to_string(image, lang=None if lang == [] else lang)
 
