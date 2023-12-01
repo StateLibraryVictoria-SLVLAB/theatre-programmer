@@ -26,6 +26,7 @@ def get_named_entities(ocr_text: str):
             entities.append(entity)
 
     print("ENTITIES ", entities)
+    entities = "/n".join(entities)
 
     return entities
 
@@ -65,9 +66,9 @@ with gr.Blocks() as demo:
             lang = gr.Dropdown(choices, value="eng")
             btn = gr.Button("Run")
         with gr.Column():
-            text_out = gr.TextArea()
+            text_out = gr.TextArea(label="OCR output")
         with gr.Column():
-            ner = gr.TextArea()
+            ner = gr.TextArea(label="Named entities")
 
     btn.click(fn=run, inputs=[image_in, lang], outputs=[text_out, ner])
 
