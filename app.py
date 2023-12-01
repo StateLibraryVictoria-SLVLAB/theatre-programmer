@@ -24,7 +24,8 @@ def get_named_entities(ocr_text: str):
     for token in sentence:
         for entity in token.get_spans("ner"):
             entities.append(entity)
-            print(token.get_tag("pos").value)
+
+    print("ENTITIES ", entities)
 
     return entities
 
