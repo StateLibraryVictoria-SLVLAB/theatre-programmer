@@ -23,12 +23,12 @@ def get_named_entities(ocr_text: str):
 
     for token in sentence:
         for entity in token.get_spans("ner"):
-            print("ENT ", str(entity))
+            entity = str(entity).split(":")[1]
             entities.append(entity)
 
-    print("ENTITIES ", entities)
-    # entities = "/n".join(entities)
+    entities = "/n".join(entities)
 
+    print("ENTITIES ", entities)
     return entities
 
 
