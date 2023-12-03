@@ -32,31 +32,20 @@ def get_named_entities(ocr_text: str):
     return entities
 
 
-# If you don't have tesseract executable in your PATH, include the following:
-# pytesseract.pytesseract.tesseract_cmd = r'<full_path_to_your_tesseract_executable>'
-# Example tesseract_cmd = r'C:\Program Files (x86)\Tesseract-OCR\tesseract'
-
-# Simple image to string
-# print(pytesseract.image_to_string(Image.open('eurotext.png')))
-
-# # French text image to string
-# print(pytesseract.image_to_string(Image.open('test-european.jpg'), lang='fra'))
-
-# # Get bounding box estimates
-# print(pytesseract.image_to_boxes(Image.open('test.png')))
-
-# # Get verbose data including boxes, confidences, line and page numbers
-# print(pytesseract.image_to_data(Image.open('test.png')))
-
-# # Get information about orientation and script detection
-# print(pytesseract.image_to_osd(Image.open('test.png'))
-
-
 def run(image, lang="eng"):
     result = pytesseract.image_to_string(image, lang=None if lang == [] else lang)
 
     ner = get_named_entities(result)
     return result, ner
+
+
+def download_output(ocr_text: str, named_entities: str):
+    print("Download output!")
+
+    print("OCR text: ", len(ocr_text))
+    print("Named Entities: ", len(named_entities))
+
+    return True
 
 
 with gr.Blocks() as demo:
@@ -67,12 +56,15 @@ with gr.Blocks() as demo:
             lang = gr.Dropdown(choices, value="eng")
             btn = gr.Button("Run")
         with gr.Column():
-            text_out = gr.TextArea(label="OCR output")
+            ocr_text = gr.TextArea(label="OCR output")
         with gr.Column():
             ner = gr.TextArea(label="Named entities")
         # with gr.Column():
         #     gr.CheckboxGroup(ner, label="Named entities")
+    with gr.Row():
+        download_btn = gr.Button("Download output")
 
-    btn.click(fn=run, inputs=[image_in, lang], outputs=[text_out, ner])
+    btn.click(fn=run, inputs=[image_in, lang], outputs=[ocr_text, ner])
+    download_btn.click(fn=download_output, inputs=[ocr_text, ner], outputs=[])
 
 demo.launch()
