@@ -1,10 +1,12 @@
 from PIL import Image
 import pytesseract
 import gradio as gr
+from datetime import datetime
 import os
 from flair.data import Sentence
 from flair.models import SequenceTagger
 from segtok.segmenter import split_single
+import pandas as pd
 
 tagger = SequenceTagger.load("ner-ontonotes")
 
@@ -39,13 +41,21 @@ def run(image, lang="eng"):
     return result, ner
 
 
-def download_output(ocr_text: str, named_entities: str):
-    print("Download output!")
+def download_output(image_name: str, ocr_text: str, named_entities: str):
+    try:
+        columns = ["OCR text", "Named entities"]
+        named_entities_list = named_entities.split("\n")
+        data = {ocr_text: named_entities_list}
+        now = datetime.now()
+        datetime_now = now.strftime("%Y%m%d_%H%M%S")
+        output_file = f"analysed_{image_name}_{datetime_now}.csv"
+        output_df = pd.DataFrame(data=data, columns=columns)
+        output_df.to_csv(output_file, index=False)
 
-    print("OCR text: ", len(ocr_text))
-    print("Named Entities: ", len(named_entities))
+        return output_file
 
-    return True
+    except Exception as e:
+        raise gr.Error(f"Something went wrong: here's the error: {e}")
 
 
 with gr.Blocks() as demo:
@@ -55,6 +65,8 @@ with gr.Blocks() as demo:
             image_in = gr.Image(type="pil")
             lang = gr.Dropdown(choices, value="eng")
             btn = gr.Button("Run")
+            image_name = "Test"
+            print("image_in", image_in)
         with gr.Column():
             ocr_text = gr.TextArea(label="OCR output")
         with gr.Column():
@@ -65,6 +77,10 @@ with gr.Blocks() as demo:
         download_btn = gr.Button("Download output")
 
     btn.click(fn=run, inputs=[image_in, lang], outputs=[ocr_text, ner])
-    download_btn.click(fn=download_output, inputs=[ocr_text, ner], outputs=[])
+    download_btn.click(
+        fn=download_output,
+        inputs=[image_name, ocr_text, ner],
+        outputs=[gr.components.File()],
+    )
 
 demo.launch()
