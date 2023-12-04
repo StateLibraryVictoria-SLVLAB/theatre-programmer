@@ -1,3 +1,4 @@
 flair
 gradio
 pytesseract
+openpyxl
