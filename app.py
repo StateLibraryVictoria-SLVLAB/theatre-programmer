@@ -38,8 +38,8 @@ def run(image, lang="eng"):
     print("Image ", image)
     try:
         print("Image filename ", image.filename)
-    except:
-        print("Could not print image filename")
+    except Exception as e:
+        print(f"Could not print image filename: {e}")
     result = pytesseract.image_to_string(image, lang=None if lang == [] else lang)
 
     ner = get_named_entities(result)
@@ -58,14 +58,9 @@ def download_output(ocr_text: str, named_entities: str, image_name="test"):
         ner_df = pd.Series(named_entities_list)
 
         with pd.ExcelWriter(output_file) as writer:
-            ocr_df.to_excel(
-                writer, sheet_name="OCR text", columns=["OCR text"], index=False
-            )
+            ocr_df.to_excel(writer, sheet_name="OCR text", columns=["OCR text"])
             ner_df.to_excel(
-                writer,
-                sheet_name="Named entities",
-                columns=["Named entities"],
-                index=False,
+                writer, sheet_name="Named entities", columns=["Named entities"]
             )
         return output_file
 
