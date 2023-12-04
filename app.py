@@ -37,7 +37,7 @@ def get_named_entities(ocr_text: str):
 def run(image, lang="eng"):
     print("Image ", image)
     try:
-        print("Image info ", image.info)
+        print("Image info ", image.info.keys())
     except Exception as e:
         print(f"Could not print image filename: {e}")
     result = pytesseract.image_to_string(image, lang=None if lang == [] else lang)
