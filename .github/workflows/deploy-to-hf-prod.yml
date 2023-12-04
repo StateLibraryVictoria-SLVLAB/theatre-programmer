@@ -1,4 +1,4 @@
-name: Sync to produciton Hugging Face hub
+name: Sync to production Hugging Face hub
 on:
   push:
     branches: [main]
