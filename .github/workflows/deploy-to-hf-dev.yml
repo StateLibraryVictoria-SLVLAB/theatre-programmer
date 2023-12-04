@@ -18,5 +18,5 @@ jobs:
       - name: Push to hub
         env:
           HF_TOKEN: ${{ secrets.HF_DEV_TOKEN }}
-        run: git push https://sotirios-slv:$HF_TOKEN@huggingface.co/spaces/sotirios-slv/theatre-programmer-dev main
+        run: git push https://sotirios-slv:$HF_TOKEN@huggingface.co/spaces/sotirios-slv/theatre-programmer-dev
 
