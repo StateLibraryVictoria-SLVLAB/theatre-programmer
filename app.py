@@ -42,15 +42,20 @@ def run(image, lang="eng"):
 
 def download_output(ocr_text: str, named_entities: str, image_name="test"):
     try:
-        columns = ["OCR text", "Named entities"]
         named_entities_list = named_entities.split("\n")
-        data = {ocr_text: named_entities_list}
+
         now = datetime.now()
         datetime_now = now.strftime("%Y%m%d_%H%M%S")
-        output_file = f"analysed_{image_name}_{datetime_now}.csv"
-        output_df = pd.DataFrame(data=data, columns=columns)
-        output_df.to_csv(output_file, index=False)
+        output_file = f"{image_name}_{datetime_now}.xlsx"
 
+        ocr_df = pd.Series(ocr_text)
+        print("OCR ", ocr_df)
+        ner_df = pd.Series(named_entities_list)
+        print("NER ", ner_df)
+
+        with pd.ExcelWriter(output_file) as writer:
+            ocr_df.to_excel(writer, sheet_name="OCR text")
+            ner_df.to_excel(writer, sheet_name="Named entities")
         return output_file
 
     except Exception as e:
@@ -65,7 +70,7 @@ with gr.Blocks() as demo:
             lang = gr.Dropdown(choices, value="eng")
             btn = gr.Button("Run")
             # image_name = "Test"
-            print("image_in", image_in)
+            print("image_in", image_in.name)
         with gr.Column():
             ocr_text = gr.TextArea(label="OCR output")
         with gr.Column():
