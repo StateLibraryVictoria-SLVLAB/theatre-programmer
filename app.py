@@ -8,7 +8,8 @@ from flair.models import SequenceTagger
 from segtok.segmenter import split_single
 import pandas as pd
 
-tagger = SequenceTagger.load("ner-ontonotes")
+# tagger = SequenceTagger.load("ner-ontonotes")
+tagger = SequenceTagger.load("flair/ner-english-ontonotes")
 
 langs = []
 
