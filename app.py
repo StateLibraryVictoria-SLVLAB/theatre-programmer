@@ -71,6 +71,7 @@ with gr.Blocks() as demo:
             btn = gr.Button("Run")
             # image_name = "Test"
             print("image_in", image_in.name)
+            print("image_in type", type(image_in))
         with gr.Column():
             ocr_text = gr.TextArea(label="OCR output")
         with gr.Column():
