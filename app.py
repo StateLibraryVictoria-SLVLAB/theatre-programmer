@@ -46,7 +46,7 @@ def run(image, lang="eng"):
     return result, ner
 
 
-def download_output(ocr_text: str, named_entities: str, image_name="test"):
+def download_output(ocr_text: str, named_entities: str, image_name="ocr_ner_output"):
     try:
         named_entities_list = named_entities.split("\n")
 
