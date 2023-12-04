@@ -30,7 +30,6 @@ def get_named_entities(ocr_text: str):
 
     entities = "\n".join(entities)
 
-    print("ENTITIES ", entities)
     return entities
 
 
@@ -41,7 +40,7 @@ def run(image, lang="eng"):
     return result, ner
 
 
-def download_output(image_name: str, ocr_text: str, named_entities: str):
+def download_output(ocr_text: str, named_entities: str, image_name="test"):
     try:
         columns = ["OCR text", "Named entities"]
         named_entities_list = named_entities.split("\n")
@@ -65,7 +64,7 @@ with gr.Blocks() as demo:
             image_in = gr.Image(type="pil")
             lang = gr.Dropdown(choices, value="eng")
             btn = gr.Button("Run")
-            image_name = "Test"
+            # image_name = "Test"
             print("image_in", image_in)
         with gr.Column():
             ocr_text = gr.TextArea(label="OCR output")
@@ -79,7 +78,7 @@ with gr.Blocks() as demo:
     btn.click(fn=run, inputs=[image_in, lang], outputs=[ocr_text, ner])
     download_btn.click(
         fn=download_output,
-        inputs=[image_name, ocr_text, ner],
+        inputs=[ocr_text, ner],
         outputs=[gr.components.File()],
     )
 
