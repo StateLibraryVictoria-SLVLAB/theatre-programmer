@@ -37,7 +37,7 @@ def get_named_entities(ocr_text: str):
 def run(image, lang="eng"):
     print("Image ", image)
     try:
-        print("Image info ", image.info.keys())
+        print("Image name ", image.name)
     except Exception as e:
         print(f"Could not print image filename: {e}")
     result = pytesseract.image_to_string(image, lang=None if lang == [] else lang)
@@ -70,7 +70,7 @@ with gr.Blocks() as demo:
     gr.Markdown("## Theatre Programmer")
     with gr.Row():
         with gr.Column():
-            image_in = gr.Image(type="pil", mirror_webcam=False, value="_Image.Image")
+            image_in = gr.Image(type="pil", mirror_webcam=False)
             lang = gr.Dropdown(choices, value="eng", label="Select language")
             btn = gr.Button("Run")
         with gr.Column():
@@ -81,6 +81,11 @@ with gr.Blocks() as demo:
         #     gr.CheckboxGroup(ner, label="Named entities")
     with gr.Row():
         download_btn = gr.Button("Download output")
+
+    try:
+        print("Image name ", image_in.name)
+    except Exception as e:
+        print(f"Could not print image filename: {e}")
 
     btn.click(fn=run, inputs=[image_in, lang], outputs=[ocr_text, ner])
     download_btn.click(
