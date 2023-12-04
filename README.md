@@ -1,8 +1,8 @@
 ---
 title: Theatre Programmer
-emoji: 🚀
+emoji: 🍍
 colorFrom: blue
-colorTo: green
+colorTo: yellow
 sdk: gradio
 sdk_version: 4.7.1
 app_file: app.py
