@@ -2,4 +2,4 @@ flair
 gradio
 pytesseract
 torch
-openpyxl
+xlsxwriter

@@ -73,7 +73,7 @@ with gr.Blocks() as demo:
     with gr.Row():
         with gr.Column():
             image_in = gr.Image(type="pil", mirror_webcam=False)
-            lang = gr.Dropdown(choices, value="eng")
+            lang = gr.Dropdown(choices, value="eng", label="Select language")
             btn = gr.Button("Run")
         with gr.Column():
             ocr_text = gr.TextArea(label="OCR output")
