@@ -70,7 +70,7 @@ with gr.Blocks() as demo:
     gr.Markdown("## Theatre Programmer")
     with gr.Row():
         with gr.Column():
-            image_in = gr.Image(type="pil", mirror_webcam=False)
+            image_in = gr.Image(type="pil", mirror_webcam=False, value="_Image.Image")
             lang = gr.Dropdown(choices, value="eng", label="Select language")
             btn = gr.Button("Run")
         with gr.Column():
