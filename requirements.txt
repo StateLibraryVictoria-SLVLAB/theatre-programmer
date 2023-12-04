@@ -1,5 +1,5 @@
 flair
 gradio
 pytesseract
-pytorch
+torch
 openpyxl
