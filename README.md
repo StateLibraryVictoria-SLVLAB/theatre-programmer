@@ -17,3 +17,7 @@ Check out the configuration reference at https://huggingface.co/docs/hub/spaces-
 Uses Tesseract to perform OCR on any image supplied as an input. The text identified in the image is then through a Flair Named Entity Recognition (NER) model, the output of which is returned to the page.
 
 This is a prototype produced for a project at the State Library Victoria in Melbourne, Australia.
+<!-- 
+## Repository management
+
+Although Hugging Face is used to host the interactive demo of this app, GitHub is used to  -->
