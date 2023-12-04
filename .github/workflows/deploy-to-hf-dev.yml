@@ -1,7 +1,8 @@
-name: Sync to production Hugging Face hub
+name: Sync to dev Hugging Face hub
 on:
   push:
-    branches: [main]
+    branches-ignore:
+        - main
 
   # to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -17,4 +18,5 @@ jobs:
       - name: Push to hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: git push https://HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/sotirios-slv/theatre-programmer main
+        run: git push https://HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/sotirios-slv/theatre-programmer-dev main
+
