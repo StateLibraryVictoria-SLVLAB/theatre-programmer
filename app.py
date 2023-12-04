@@ -35,6 +35,8 @@ def get_named_entities(ocr_text: str):
 
 
 def run(image, lang="eng"):
+    print("Image ", image)
+    print("Image type ", type(image))
     result = pytesseract.image_to_string(image, lang=None if lang == [] else lang)
 
     ner = get_named_entities(result)
@@ -70,8 +72,6 @@ with gr.Blocks() as demo:
             image_in = gr.Image(type="pil")
             lang = gr.Dropdown(choices, value="eng")
             btn = gr.Button("Run")
-            print("image_in", image_in.name)
-            print("image_in type", type(image_in))
         with gr.Column():
             ocr_text = gr.TextArea(label="OCR output")
         with gr.Column():
