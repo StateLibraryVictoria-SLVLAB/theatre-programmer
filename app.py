@@ -69,9 +69,8 @@ with gr.Blocks() as demo:
             image_in = gr.Image(type="pil")
             lang = gr.Dropdown(choices, value="eng")
             btn = gr.Button("Run")
-            # image_name = "Test"
-            print("image_in", image_in.name)
-            print("image_in type", type(image_in))
+            # print("image_in", image_in.name)
+            # print("image_in type", type(image_in))
         with gr.Column():
             ocr_text = gr.TextArea(label="OCR output")
         with gr.Column():
