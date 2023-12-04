@@ -57,7 +57,7 @@ def download_output(ocr_text: str, named_entities: str, image_name="test"):
         ocr_df = pd.Series(ocr_text)
         ner_df = pd.Series(named_entities_list)
 
-        with pd.ExcelWriter(output_file) as writer:
+        with pd.ExcelWriter(output_file, engine="xlsxwriter") as writer:
             ocr_df.to_excel(writer, sheet_name="OCR text", columns=["OCR text"])
             ner_df.to_excel(
                 writer, sheet_name="Named entities", columns=["Named entities"]
