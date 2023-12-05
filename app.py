@@ -35,11 +35,6 @@ def get_named_entities(ocr_text: str):
 
 
 def run(image, lang="eng"):
-    print("Image ", image)
-    try:
-        print("Image name ", image.name)
-    except Exception as e:
-        print(f"Could not print image filename: {e}")
     result = pytesseract.image_to_string(image, lang=None if lang == [] else lang)
 
     ner = get_named_entities(result)
@@ -81,11 +76,6 @@ with gr.Blocks() as demo:
         #     gr.CheckboxGroup(ner, label="Named entities")
     with gr.Row():
         download_btn = gr.Button("Download output")
-
-    try:
-        print("Image name ", image_in.name)
-    except Exception as e:
-        print(f"Could not print image filename: {e}")
 
     btn.click(fn=run, inputs=[image_in, lang], outputs=[ocr_text, ner])
     download_btn.click(
